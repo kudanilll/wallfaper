@@ -1,3 +1,4 @@
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:wallfaper/routes.dart';
 
@@ -14,33 +15,45 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.background,
-        title: const Text(
-          'Home',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 30,
+        title: ListTile(
+          leading: GestureDetector(
+            onTap: () => Navigator.pushNamed(context, Routes.profile),
+            child: const CircleAvatar(
+              backgroundImage: NetworkImage(
+                  'https://365webresources.com/wp-content/uploads/2016/09/FREE-PROFILE-AVATARS.png'),
+              radius: 18,
+            ),
           ),
+          title: Text(
+            'Good Afternoon',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          subtitle: Text(
+            'Daniel',
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          horizontalTitleGap: 12,
+          contentPadding: const EdgeInsets.only(left: 2),
         ),
         toolbarHeight: 72,
-        actions: [
-          GestureDetector(
-            onTap: () {
-              // Navigasi ke halaman profil
-              Navigator.pushNamed(context, Routes.profile);
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 16),
-              child: CircleAvatar(
-                radius: 18,
-                backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-                child: const CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'https://365webresources.com/wp-content/uploads/2016/09/FREE-PROFILE-AVATARS.png'),
-                  radius: 18,
-                ),
+        actions: const [
+          IconButton(
+            onPressed: null,
+            icon: Icon(
+              EneftyIcons.search_normal_2_outline,
+              color: Colors.black,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 8),
+            child: IconButton(
+              onPressed: null,
+              icon: Icon(
+                EneftyIcons.notification_outline,
+                color: Colors.black,
               ),
             ),
-          )
+          ),
         ],
       ),
       body: const Center(
