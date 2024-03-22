@@ -1,29 +1,29 @@
-class User {
+class UserData {
   String image;
   String name;
   String email;
 
   // Constructor
-  User({
+  UserData({
     required this.image,
     required this.name,
     required this.email,
   });
 
-  User copy({
+  UserData copy({
     String? imagePath,
     String? name,
     String? phone,
     String? email,
     String? about,
   }) =>
-      User(
+      UserData(
         image: imagePath ?? image,
         name: name ?? this.name,
         email: email ?? this.email,
       );
 
-  static User fromJson(Map<String, dynamic> json) => User(
+  static UserData fromJson(Map<String, dynamic> json) => UserData(
         image: json['imagePath'],
         name: json['name'],
         email: json['email'],

@@ -31,9 +31,24 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void _showButtonPressDialog(BuildContext context, String provider) {
-    Snackbar(context: context, text: '$provider Button Pressed!').show();
-    // Navigator.pushReplacementNamed(context, Routes.notFound);
+  Future<void> _loginWithGoogle() async {
+    try {
+      UserCredential userCredential = await AuthService().signInWithGoogle();
+      User? user = userCredential.user;
+      if (user != null) {
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, Routes.home);
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        Snackbar(
+                context: context,
+                text: 'Error signing in with Google',
+                isError: true)
+            .show();
+      }
+    }
   }
 
   @override
@@ -144,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             GoogleAuthButton(
-              onTap: () => _showButtonPressDialog(context, 'pressed'),
+              onTap: () => _loginWithGoogle(),
             ),
           ],
         ),

@@ -1,5 +1,5 @@
 import 'package:enefty_icons/enefty_icons.dart';
-import 'package:wallfaper/models/user.dart';
+import 'package:wallfaper/models/user_data.dart';
 import 'package:wallfaper/routes.dart';
 import 'package:wallfaper/services/auth_service.dart';
 import 'package:wallfaper/widgets/button.dart';
@@ -14,7 +14,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final _user = User(
+  final _user = UserData(
     name: 'Daniel',
     email: 'daniel@gmail.com',
     image:
