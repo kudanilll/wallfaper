@@ -4,6 +4,7 @@ import 'package:wallfaper/screens/authentication/login_screen.dart';
 import 'package:wallfaper/screens/authentication/register_screen.dart';
 import 'package:wallfaper/screens/common/favorite_screen.dart';
 import 'package:wallfaper/screens/common/home_screen.dart';
+import 'package:wallfaper/screens/common/notification_screen.dart';
 import 'package:wallfaper/screens/common/profile_screen.dart';
 import 'package:wallfaper/screens/not_found_screen.dart';
 import 'package:wallfaper/screens/splash_screen.dart';
@@ -14,6 +15,7 @@ class Routes {
   static const String register = '/register';
   static const String forgotPassword = '/forgot-password';
   static const String home = '/home';
+  static const String notification = '/notification';
   static const String favorite = '/favorite';
   static const String profile = '/profile';
   static const String notFound = '/not-found';
@@ -30,6 +32,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
       case home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case notification:
+        return MaterialPageRoute(builder: (_) => const NotificationScreen());
       case favorite:
         return MaterialPageRoute(builder: (_) => const FavoriteScreen());
       case profile:
