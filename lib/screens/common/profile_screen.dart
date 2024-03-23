@@ -1,5 +1,5 @@
 import 'package:enefty_icons/enefty_icons.dart';
-import 'package:wallfaper/models/user_data.dart';
+import 'package:wallfaper/models/user_info.dart';
 import 'package:wallfaper/routes.dart';
 import 'package:wallfaper/services/auth_service.dart';
 import 'package:wallfaper/widgets/button.dart';
@@ -14,30 +14,30 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final _user = UserData(
-    name: 'Daniel',
-    email: 'daniel@gmail.com',
+  final _user = UserInfo(
+    name: 'Marsha',
+    email: 'test@gmail.com',
     image:
-        'https://365webresources.com/wp-content/uploads/2016/09/FREE-PROFILE-AVATARS.png',
+        'https://cdn.idntimes.com/content-images/community/2023/01/whatsapp-image-2023-01-08-at-115243-am-770cbc2889bb4c14bf5042be7b505d5d-7d2e9e7f5bf393938ad6f394176ffded.jpeg',
   );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        elevation: 0,
+        toolbarHeight: 72,
+        title: Text(
+          'Hello, ${_user.name}',
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: Column(
         children: [
-          AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            toolbarHeight: 72,
-            title: Text(
-              'Hello, ${_user.name}',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 22,
-              ),
-            ),
-            centerTitle: true,
-          ),
           InkWell(
             child: ProfileImage(
               imageUrl: _user.image,

@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: () => Navigator.pushNamed(context, Routes.profile),
             child: const CircleAvatar(
               backgroundImage: NetworkImage(
-                'https://365webresources.com/wp-content/uploads/2016/09/FREE-PROFILE-AVATARS.png',
+                'https://cdn.idntimes.com/content-images/community/2023/01/whatsapp-image-2023-01-08-at-115243-am-770cbc2889bb4c14bf5042be7b505d5d-7d2e9e7f5bf393938ad6f394176ffded.jpeg',
               ),
               radius: 18,
             ),
