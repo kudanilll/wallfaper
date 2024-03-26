@@ -18,14 +18,40 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool _hidePassword = false;
 
+  bool validate(BuildContext context) {
+    if (_emailController.text.isEmpty) {
+      Snackbar(
+        context: context,
+        text: 'Email cannot be empty',
+        isError: true,
+      ).show();
+      return false;
+    }
+    if (_passwordController.text.isEmpty) {
+      Snackbar(
+        context: context,
+        text: 'Password cannot be empty',
+        isError: true,
+      ).show();
+      return false;
+    }
+    return true;
+  }
+
   Future<void> _onSubmit(BuildContext context) async {
     FocusManager.instance.primaryFocus?.unfocus();
+    if (!validate(context)) return;
     User? user = await AuthService().signInWithEmailAndPassword(
         _emailController.text, _passwordController.text);
     if (context.mounted) {
       if (user == null) {
-        Snackbar(context: context, text: 'Login failed', isError: true).show();
+        Snackbar(
+          context: context,
+          text: 'Account not found',
+          isError: true,
+        ).show();
       } else {
+        Snackbar(context: context, text: 'Login success').show();
         Navigator.pushReplacementNamed(context, Routes.home);
       }
     }

@@ -8,12 +8,14 @@ import 'package:wallfaper/screens/common/notification_screen.dart';
 import 'package:wallfaper/screens/common/profile_screen.dart';
 import 'package:wallfaper/screens/not_found_screen.dart';
 import 'package:wallfaper/screens/splash_screen.dart';
+import 'package:wallfaper/screens/wizard/setup_profile_screen.dart';
 
 class Routes {
   static const String splash = '/';
   static const String login = '/login';
   static const String register = '/register';
   static const String forgotPassword = '/forgot-password';
+  static const String setupProfile = '/setup-profile';
   static const String home = '/home';
   static const String notification = '/notification';
   static const String favorite = '/favorite';
@@ -30,6 +32,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
       case forgotPassword:
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
+      case setupProfile:
+        return MaterialPageRoute(builder: (_) => const SetupProfileScreen());
       case home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case notification:

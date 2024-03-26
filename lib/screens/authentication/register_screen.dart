@@ -6,6 +6,14 @@ import 'package:wallfaper/widgets/button.dart';
 import 'package:wallfaper/widgets/header.dart';
 import 'package:wallfaper/widgets/snackbar.dart';
 
+extension EmailValidator on String {
+  bool isValidEmail() {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(this);
+  }
+}
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
   @override
@@ -20,24 +28,91 @@ class _RegisterScreenState extends State<RegisterScreen> {
       TextEditingController();
   bool _hidePassword = false;
 
-  Future<void> _onSubmit(BuildContext context) async {
-    if (_emailController.text != _confirmPasswordController.text) {
+  bool validate(BuildContext context) {
+    if (_userNameController.text.isEmpty) {
       Snackbar(
-              context: context,
-              text: 'Passwords are not the same',
-              isError: true)
-          .show();
-      return;
+        context: context,
+        text: 'Username cannot be empty',
+        isError: true,
+      ).show();
+      return false;
+    }
+    if (_userNameController.text.contains(' ')) {
+      Snackbar(
+        context: context,
+        text: 'Username cannot contain spaces',
+        isError: true,
+      ).show();
+      return false;
+    }
+    if (_emailController.text.isEmpty) {
+      Snackbar(
+        context: context,
+        text: 'Email cannot be empty',
+        isError: true,
+      ).show();
+      return false;
+    }
+    if (!_emailController.text.isValidEmail()) {
+      return false;
+    }
+    if (_passwordController.text.isEmpty ||
+        _confirmPasswordController.text.isEmpty) {
+      Snackbar(
+        context: context,
+        text: 'Password cannot be empty',
+        isError: true,
+      ).show();
+      return false;
+    }
+    if (_passwordController.text != _confirmPasswordController.text) {
+      Snackbar(
+        context: context,
+        text: 'Passwords are not the same',
+        isError: true,
+      ).show();
+      return false;
+    }
+    if (_passwordController.text.length < 6) {
+      Snackbar(
+        context: context,
+        text: 'Password must be at least 6 characters',
+        isError: true,
+      ).show();
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _onSubmit(BuildContext context) async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    if (!validate(context)) return;
+    bool usernameAvailable =
+        await AuthService().isUsernameAvailable(_userNameController.text);
+    if (context.mounted) {
+      if (!usernameAvailable) {
+        Snackbar(
+          context: context,
+          text: 'Username not available',
+          isError: true,
+        ).show();
+        return;
+      }
     }
     User? user = await AuthService().registerWithEmailAndPassword(
-        _emailController.text, _passwordController.text);
+        _emailController.text,
+        _passwordController.text,
+        _userNameController.text);
     if (context.mounted) {
       if (user == null) {
-        Snackbar(context: context, text: 'Register failed', isError: true)
-            .show();
+        Snackbar(
+          context: context,
+          text: 'Register failed',
+          isError: true,
+        ).show();
       } else {
-        // Snackbar(context: context, text: '').show();
-        Navigator.pushNamed(context, Routes.home);
+        Snackbar(context: context, text: 'Register success').show();
+        Navigator.pushReplacementNamed(context, Routes.setupProfile);
       }
     }
   }

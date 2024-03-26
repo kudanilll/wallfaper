@@ -39,6 +39,9 @@ dependencies:
   enefty_icons: ^1.0.7
   google_sign_in: ^6.2.1
   http: ^1.2.1
+  cloud_firestore: ^4.15.10
+  firebase_storage: ^11.6.11
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:

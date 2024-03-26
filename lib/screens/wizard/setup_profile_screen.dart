@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 
-class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({super.key});
+class SetupProfileScreen extends StatefulWidget {
+  const SetupProfileScreen({super.key});
   @override
-  State<NotificationScreen> createState() => _NotificationScreenState();
+  State<SetupProfileScreen> createState() => _SetupProfileScreenState();
 }
 
-class _NotificationScreenState extends State<NotificationScreen> {
+class _SetupProfileScreenState extends State<SetupProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.background,
         elevation: 0,
         toolbarHeight: 72,
         title: const Text(
-          'Notification',
+          'Setup Profile',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 22,
@@ -26,7 +27,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text('You dont have notifications')],
+          children: [Text('')],
         ),
       ),
     );

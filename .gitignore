@@ -46,3 +46,4 @@ app.*.map.json
 /ios/Runner/GoogleService-Info.plist
 /ios/firebase_app_id_file.json
 /.vscode
+/lib/constants/api_constants.dart

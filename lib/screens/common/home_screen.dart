@@ -1,7 +1,9 @@
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:wallfaper/constants/variables.dart';
+import 'package:wallfaper/models/wallpaper_model.dart';
 import 'package:wallfaper/routes.dart';
+import 'package:wallfaper/services/api_service.dart';
 import 'package:wallfaper/utils/time_greeting.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,9 +17,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _onRefresh(BuildContext context) async {
     refreshKey.currentState?.show(atTop: false);
+    final model = await ApiService().getWallpaper();
+    if (model != null) {
+      debugPrint(wallpaperModelToJson(model));
+    }
     await Future.delayed(const Duration(seconds: 2));
     setState(() {
-      limit = random.nextInt(10);
+      page++;
     });
     return;
   }
