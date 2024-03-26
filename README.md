@@ -21,7 +21,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## License
 
-```docs
+```License
 MIT License
 
 Copyright (c) 2024 kudanill.
