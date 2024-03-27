@@ -1,13 +1,11 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // Sign in with email and password
   Future<User?> signInWithEmailAndPassword(
@@ -30,22 +28,23 @@ class AuthService {
     String username,
   ) async {
     try {
-      // Registrasi dengan email dan password
       UserCredential result = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       User? user = result.user;
-
       // Jika registrasi berhasil, buat dokumen pengguna di Firestore
       if (user != null) {
-        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+        await _firestore.collection('users').doc(user.uid).set({
           'email': email,
           'username': username,
+          'emailVerified': false, // Set initial value to false
           'createdAt': FieldValue.serverTimestamp(),
+          'profileUrl': '',
         });
+        // Kirim email verifikasi
+        await user.sendEmailVerification();
       }
-
       return user;
     } catch (e) {
       debugPrint(e.toString());
@@ -102,20 +101,65 @@ class AuthService {
   }
 
   Future<bool> isUsernameAvailable(String username) async {
-    final querySnapshot = await FirebaseFirestore.instance
+    final querySnapshot = await _firestore
         .collection('users')
         .where('username', isEqualTo: username)
         .get();
     return querySnapshot.docs.isEmpty;
   }
 
-  Future<String> uploadProfilePhoto(File imageFile) async {
-    final storageRef = FirebaseStorage.instance
-        .ref()
-        .child('profile_photos/${getUserId()}.jpg');
-    final uploadTask = storageRef.putFile(imageFile);
-    await uploadTask.whenComplete(() {});
-    final photoUrl = await storageRef.getDownloadURL();
-    return photoUrl;
+  Future<String?> getUsernameFromFirestore() async {
+    try {
+      final DocumentSnapshot userDoc =
+          await _firestore.collection('users').doc(getUserId()).get();
+
+      if (userDoc.exists) {
+        final data = userDoc.data() as Map<String, dynamic>?;
+        return data?['username'] as String?;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      debugPrint('Error getting username: $e');
+      return null;
+    }
+  }
+
+  Future<void> updateUsernameInFirestore(String newUsername) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(getUserId())
+          .update({'username': newUsername});
+    } catch (e) {
+      debugPrint('Error updating username: $e');
+    }
+  }
+
+  Future<String?> getProfileURLFromFirestore() async {
+    try {
+      final DocumentSnapshot userDoc =
+          await _firestore.collection('users').doc(getUserId()).get();
+      if (userDoc.exists) {
+        final data = userDoc.data() as Map<String, dynamic>?;
+        return data?['profileUrl'] as String?;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      debugPrint('Error getting profileUrl: $e');
+      return null;
+    }
+  }
+
+  Future<void> updateProfileURLInFirestore(String newProfileUrl) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(getUserId())
+          .update({'profileUrl': newProfileUrl});
+    } catch (e) {
+      debugPrint('Error updating profileUrl: $e');
+    }
   }
 }

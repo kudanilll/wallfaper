@@ -1,9 +1,9 @@
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:wallfaper/constants/variables.dart';
-import 'package:wallfaper/models/wallpaper_model.dart';
+import 'package:wallfaper/constants/global_variables.dart';
 import 'package:wallfaper/routes.dart';
-import 'package:wallfaper/services/api_service.dart';
+// import 'package:wallfaper/services/api_service.dart';
+// import 'package:wallfaper/services/auth_service.dart';
 import 'package:wallfaper/utils/time_greeting.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,14 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _onRefresh(BuildContext context) async {
     refreshKey.currentState?.show(atTop: false);
-    final model = await ApiService().getWallpaper();
-    if (model != null) {
-      debugPrint(wallpaperModelToJson(model));
-    }
+    // final model = await ApiService().getWallpaper();
     await Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      page++;
-    });
+    setState(() {});
     return;
   }
 
@@ -113,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    for (int i = 0; i < limit; i++)
+                    for (int i = 0; i < 10; i++)
                       Padding(
                         padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
                         child: ClipRRect(

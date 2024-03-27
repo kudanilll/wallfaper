@@ -16,23 +16,19 @@ class Header extends StatelessWidget {
       children: [
         Align(
           alignment: Alignment.centerLeft,
-          child: SizedBox(
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 32,
-              ),
+          child: Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 32,
             ),
           ),
         ),
         Align(
           alignment: Alignment.centerLeft,
-          child: SizedBox(
-            child: Text(
-              subtitle ?? '',
-              style: TextStyle(fontSize: 16, color: Colors.grey.shade700),
-            ),
+          child: Text(
+            subtitle ?? '',
+            style: TextStyle(fontSize: 16, color: Colors.grey.shade700),
           ),
         ),
       ],

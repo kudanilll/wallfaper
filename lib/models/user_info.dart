@@ -11,17 +11,11 @@ class UserInfo {
   });
 
   UserInfo copy({
-    String? imagePath,
-    String? name,
-    String? phone,
-    String? email,
-    String? about,
+    required String imagePath,
+    required String name,
+    required String email,
   }) =>
-      UserInfo(
-        image: imagePath ?? image,
-        name: name ?? this.name,
-        email: email ?? this.email,
-      );
+      UserInfo(image: imagePath, name: name, email: email);
 
   static UserInfo fromJson(Map<String, dynamic> json) => UserInfo(
         image: json['imagePath'],

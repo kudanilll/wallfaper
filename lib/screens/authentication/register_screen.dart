@@ -54,6 +54,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return false;
     }
     if (!_emailController.text.isValidEmail()) {
+      Snackbar(
+        context: context,
+        text: 'Invalid email',
+        isError: true,
+      ).show();
       return false;
     }
     if (_passwordController.text.isEmpty ||

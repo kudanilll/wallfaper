@@ -18,6 +18,7 @@ samples, guidance on mobile development, and a full API reference.
 ## To-Do List
 
 - Verification email when registering.
+- Fix bug when user pick image after registering (get & update to firestore/storage).
 
 ## License
 
